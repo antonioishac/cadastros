@@ -2,6 +2,8 @@ package br.com.cactus.cadastros.bo;
 
 import java.util.List;
 
+//INTERFACE BO GENERICA
+
 public interface GenericBO<T> {
 	
 	T salvar(T obj);
