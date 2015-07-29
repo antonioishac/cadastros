@@ -10,6 +10,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -19,7 +20,6 @@ import br.com.cactus.cadastros.bo.MunicipioBO;
 import br.com.cactus.cadastros.model.Municipio;
 import br.com.cactus.cadastros.model.Uf;
 import br.com.cactus.cadastros.model.vo.MunicipioVO;
-import br.com.cactus.cadastros.model.vo.UfVO;
 import br.com.cactus.cadastros.repository.UfRepository;
 
 @Controller
@@ -42,6 +42,15 @@ public class MunicipioController {
 	public String telaLista(){
 		
 		return "municipio/listaMunicipio";
+		
+	}
+	
+	@RequestMapping(value = "/cadastroMunicipio.do")
+	public String telaCadastro(Model model) {
+		
+		model.addAttribute("uf", new Uf());
+				
+		return "municipio/cadastroMunicipio";
 		
 	}
 	

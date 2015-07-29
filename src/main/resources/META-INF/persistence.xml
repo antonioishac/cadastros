@@ -15,7 +15,7 @@
         <properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/cactuserp" />
 			<property name="javax.persistence.jdbc.user" value="root" />
-			<property name="javax.persistence.jdbc.password" value="jesus" />
+			<property name="javax.persistence.jdbc.password" value="jesuscristo" />
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver" />
 
 			<!-- <property name="hibernate.hbm2ddl.auto" value="update" /> -->
