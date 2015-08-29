@@ -13,8 +13,10 @@ public class GenericBOImpl<T> implements GenericBO<T> {
 
 	@Override
 	public T salvar(T obj) {
+		
 		this.crud.salvar(obj);		
-		return obj;
+		return obj;	
+		
 	}
 
 	@Override

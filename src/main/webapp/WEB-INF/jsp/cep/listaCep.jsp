@@ -7,15 +7,12 @@
 <html>
 	
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/global.css" />
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css">
-		
+
 	<tiles:insertDefinition name="template">
 	
 		<tiles:putAttribute name="corpo">
 		
-			<script src="${pageContext.request.contextPath}/js/municipio/lis_municipio.js"></script>
-			<script src="${pageContext.request.contextPath}/js/municipio/autocomplete.js"></script>
-			<script src="//code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+			<script src="${pageContext.request.contextPath}/js/lista.js"></script>
 		
 			<script type="text/javascript">
 
@@ -30,6 +27,8 @@
 											
 				$(document).ready(function(){
 
+					var cep = new lista();
+
 					var config = {
 							previous : 'Anterior',
 							next : 'Próximo',
@@ -38,57 +37,56 @@
 							info : 'Mostrando página _PAGE_ de _PAGES_',
 							infoEmpty : '',
 							zeroRecords : 'Não há registros para serem exibidos',
-							funcExcluir : "excluir"
+							funcExcluir : "excluir",
+							url : '/cep/listarCep.do?funcExcluir='
 						};
 										
-					municipio.setTabela('#tabela_municipio',config);
+					cep.setTabela('#tabela_cep',config);
 					
 					$('#buscar').click(function() {										
 
-						loadTabelaMunicipio();
+						loadTabelaCep();
 							
 					});
 
-					function loadTabelaMunicipio(){
-						var campoNome = $("#inputNome").val();
+					function loadTabelaCep(){
+						var campoLogradouro = $('#inputLogradouro').val();
 						
-						var campoUf = $('#inputUf').val();
-
 						parametros = '';
-						
-						if(campoNome != null && $.trim(campoNome) != '' || campoUf != null && $.trim(campoUf) != '') {						
+												
+						if(campoLogradouro != null && $.trim(campoLogradouro) != '') {						
 
-							parametros = "?nome=" + campoNome;
-							parametros += "&uf=" + campoUf;
-							parametros += "&funcExcluir=excluir";								
+							parametros = "?logradouro=" + campoLogradouro;
+							parametros += "&funcExcluir=excluir";
+							
 						}else {
 							parametros = "?funcExcluir=excluir";
 						}
 						
-						municipio.atualizar(parametros);
+						cep.atualizar(parametros, '/cep/listarCep.do');
 					}
 
 					$('#confirmaExclusao').click(function() {
-
-						//alert('parametro passado: ' + idExcluir);
-						
+												
  						$.ajax({
 							type: 'get',
-							url: '${pageContext.request.contextPath}/municipio/removeMunicipio.do',
+							url: '${pageContext.request.contextPath}/cep/removeCep.do',
 							data: 'id=' + idExcluir,
 							success: function(retorno){
 
-								loadTabelaMunicipio();
+								loadTabelaCep();
 								
 								$('#modalExcluir').modal('hide');
 								
 							},
 							error: function() {
-								alert("Erro ao excluir municipio.");
+								alert("Erro ao excluir cep.");
 							}
 						});						
 						
 					});
+
+					$('#inputCep').mask('99999-999');
 															
 				});
 
@@ -96,27 +94,32 @@
 			
 			<c:import url="navegacao.jsp" />
 			
-			<c:import url="buscaMunicipio.jsp" />
-					      						
+			<c:import url="buscaCep.jsp" />
+												
+			<!-- 						
+			<label for="btnIncluir" class="btn btn-primary" >
+         		<i class="glyphicon glyphicon-plus"></i> Incluir País
+      		</label>
+      		<input id="btnIncluir" name="btnIncluir" type="button" class="hidden" />
+      		 -->
+      						
 			<div class="panel panel-default centroCadastro">
-  				<div class="panel-heading">Lista de Municípios</div>
+  				<div class="panel-heading">Lista de Cep</div>
   				<div class="panel-body">
   					
-  					<table id="tabela_municipio" class="table table-striped table-bordered cabecalho_tabela " cellspacing="0" width="100%">
+  					<table id="tabela_cep" class="table table-striped table-bordered cabecalho_tabela " cellspacing="0" width="100%">
 						<thead>
 							<tr>							
 								<th>ID</th>
 								
+								<th>Logradouro</th>
+								
+								<th>CEP</th>
+
+								<th>Município</th>
+								
 								<th>UF</th>
-
-								<th>Nome</th>
-								
-								<th>Código IBGE</th>
-
-								<th>Código Receita Federal</th>
-								
-								<th>Código Estadual</th>
-								
+																
 								<th>Opções</th>
 							</tr>
 						</thead>

@@ -11,6 +11,8 @@
         <class>br.com.cactus.cadastros.model.Pais</class>
         <class>br.com.cactus.cadastros.model.Uf</class>
         <class>br.com.cactus.cadastros.model.Municipio</class>
+        <class>br.com.cactus.cadastros.model.Cep</class>
+        <class>br.com.cactus.cadastros.model.Ncm</class>
                         
         <properties>
 			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost/cactuserp" />

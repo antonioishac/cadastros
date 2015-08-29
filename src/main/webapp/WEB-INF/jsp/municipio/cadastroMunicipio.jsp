@@ -27,12 +27,11 @@
 
 					<div class="row">
 						<div class="search-container col-xs-12 col-sm-6">
-							<label for="uf" class="control-label">UF:</label> 
-							<div class="ui-widget">
-								<input type="text" id="inputUf" name="ufInput" value="${municipio.uf.nome}" class="search form-control required" />								
-							</div>
+							<label for="uf" class="control-label">UF:</label>							
+							<input type="text" id="inputUf" name="ufInput" value="${municipio.uf.nome}" class="search form-control required" />	
+							<input type="hidden" id="inputUfId" name="uf.id" value="${municipio.uf.id}">						
 						</div>
-
+												
 						<div class="col-xs-12 col-sm-6">
 							<label for="nome" class="control-label">Nome:</label> 
 							<input name="nome" id="nomeInput" value="${municipio.nome}" class="form-control required" />
@@ -47,7 +46,7 @@
 
 						<div class="col-xs-12 col-sm-6">
 							<label for="codigoReceitaFederal" class="control-label">Código Receita Federal:</label>
-							<input name="codigoReceitaFederal" id="codigoReceitaFederalInput" value="${municipio.codigoReceitaFederal}" class="form-control required" />
+							<input name="codigoReceitaFederal" id="codigoReceitaFederalInput" value="${municipio.codigoReceitaFederal}" class="form-control" />
 						</div>
 					</div>
 
@@ -66,7 +65,7 @@
 				
 			</div>			
 			
-			<input type="hidden" id="inputUfId" name="uf.id">
+			
 			<input type="hidden" name="id" value="${municipio.id}"/>
 			
 		</form>

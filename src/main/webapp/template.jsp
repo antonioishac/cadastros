@@ -66,7 +66,7 @@
 							<li><a href="${pageContext.request.contextPath}/pais/listaPais.do">País</a></li>
 							<li><a href="${pageContext.request.contextPath}/uf/listaUf.do">Estado</a></li>
 							<li><a href="${pageContext.request.contextPath}/municipio/listaMunicipio.do">Municipio</a><li>
-							<li><a href="#">CEP</a></li>							
+							<li><a href="${pageContext.request.contextPath}/cep/listaCep.do">CEP</a></li>							
 						</ul>
 					</li>
 				
@@ -76,7 +76,17 @@
 							<li><a href="${pageContext.request.contextPath}/preparaCadastroAtividadeForCli.do">Atividade For/Cli</a></li>
 							<li><a href="${pageContext.request.contextPath}/atividadeForCli/listar.do">Listar Atividade For/Cli</a>
 						</ul>
-					</li>					
+					</li>
+					
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Produto<span class="caret"></span></a>
+						<ul class="dropdown-menu" role="menu">
+							<li><a href="${pageContext.request.contextPath}/ncm/listaNcm.do">NCM</a></li>
+							<li><a href="#">Marca Produto</a>
+							<li><a href="#">Unidade Produto</a>
+						</ul>
+					</li>
+					
 				</ul>
 			</div>
 		</div>

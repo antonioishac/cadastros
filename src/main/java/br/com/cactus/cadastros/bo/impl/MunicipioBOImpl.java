@@ -18,7 +18,7 @@ public class MunicipioBOImpl extends GenericBOImpl<Municipio> implements Municip
 	private MunicipioRepository municipioRepository;
 			
 	@Autowired
-	public MunicipioBOImpl(GenericRepository<Municipio> MunicipioRepository) {
+	public MunicipioBOImpl(GenericRepository<Municipio> municipioRepository) {
 		this.crud = municipioRepository;
 	}
 

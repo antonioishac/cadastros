@@ -1,18 +1,20 @@
 $(document).ready(function() {
 	
-	$('#cadastraMunicipio').addClass('active');
+	$('#cadastraCep').addClass('active');
+	
+	$('#inputCep').mask('99999-999');
 			
-	$('#municipioForm').submit(function (e) {
-		
-		if ($('#inputUf').val() != '' && $('#nomeInput').val() != '') {
+	$('#cepForm').submit(function (e) {
+						
+		if ($('#inputLogradouro').val() != '') {
 			
 			e.preventDefault();
 			
-			var formdata = $('#municipioForm').serialize();
+			var formdata = $('#cepForm').serialize();
 			
 			$.ajax({
 				type: "POST", 
-				url: dominio + '/municipio/salvarMunicipio.do', 
+				url: dominio + '/cep/salvarCep.do', 
 				data: formdata, 
 				success: function(e){
 								
@@ -27,29 +29,20 @@ $(document).ready(function() {
 		}					
 	});
 	
-	$('#municipioForm').validate({
+	$('#cepForm').validate({
 
-		rules: {
-			ufInput: {
-				required: true,
-				minlength: 2				
-			},
-			nome: {
+		rules: {			
+			logradouro: {
 				required: true,
 				minlength: 2
 			}
 		},
 		messages: {
 
-			ufInput:{
-				required: 'Campo UF obrigatório',
+			logradouro:{
+				required: 'Campo Logradouro obrigatório',
 				minlength: 'Tamannho mínimo 2 caracteres',
 				maxlength: 'Tamanho máximo 2 caracteres'	
-			},
-			nome: {
-				required: 'Campo nome obrigatório',
-				minlength: 'Tamannho mínimo 2 caracteres',
-				minlength: 'Tamanho mínimo 2 caracteres'
 			}
 		},
 		highlight: function(element) {
@@ -70,12 +63,9 @@ $(document).ready(function() {
 
 	function limpaCampos() {		
 		
-		$('input[id*="Input"]').each(function () {
-			$(this).val('');
-		});
-		
-		$('#inputUf').val('');
-		$('#inputUfId').val('');
+		$('#cepForm').each(function () {
+			this.reset();			
+		});		
 	}
 	
 });

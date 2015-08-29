@@ -10,7 +10,7 @@ import br.com.cactus.cadastros.model.Municipio;
 import br.com.cactus.cadastros.model.vo.MunicipioVO;
 import br.com.cactus.cadastros.repository.MunicipioRepository;
 
-@Repository("MunicipioRepository")
+@Repository("municipioRepository")
 public class MunicipioRepositoryImpl extends GenericRepositoryImpl<Municipio> implements MunicipioRepository {
 
 	@Override

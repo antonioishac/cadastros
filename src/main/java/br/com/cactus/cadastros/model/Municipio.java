@@ -17,17 +17,25 @@ public class Municipio implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	private Integer id;
-	private String nome;
-	private Integer codigoIbge;
-	private Integer codigoReceitaFederal;
-	private Integer codigoEstadual;
-	private Uf uf;
-	
-	
-	//getter and setter
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
+	private String nome;
+	
+	@Column(name = "CODIGO_IBGE", nullable = false, length = 10)
+	private Integer codigoIbge;
+
+	@Column(name = "CODIGO_RECEITA_FEDERAL", nullable = false, length = 10)
+	private Integer codigoReceitaFederal;
+	
+	@Column(name = "CODIGO_ESTADUAL", nullable = false, length = 10)
+	private Integer codigoEstadual;
+	
+	@ManyToOne
+	@JoinColumn(name = "ID_UF", referencedColumnName = "ID")
+	private Uf uf;
+				
 	public Integer getId() {
 		return id;
 	}
@@ -43,9 +51,8 @@ public class Municipio implements Serializable {
 	
 	public void setNome(String nome) {
 		this.nome = nome;
-	}
+	}	
 	
-	@Column(name = "CODIGO_IBGE", nullable = false, length = 10)
 	public Integer getCodigoIbge() {
 		return codigoIbge;
 	}
@@ -54,7 +61,6 @@ public class Municipio implements Serializable {
 		this.codigoIbge = codigoIbge;
 	}
 	
-	@Column(name = "CODIGO_RECEITA_FEDERAL", nullable = false, length = 10)
 	public Integer getCodigoReceitaFederal() {
 		return codigoReceitaFederal;
 	}
@@ -63,7 +69,7 @@ public class Municipio implements Serializable {
 		this.codigoReceitaFederal = codigoReceitaFederal;
 	}
 	
-	@Column(name = "CODIGO_ESTADUAL", nullable = false, length = 10)
+	
 	public Integer getCodigoEstadual() {
 		return codigoEstadual;
 	}
@@ -71,9 +77,7 @@ public class Municipio implements Serializable {
 	public void setCodigoEstadual(Integer codigoEstadual) {
 		this.codigoEstadual = codigoEstadual;
 	}
-	
-	@ManyToOne
-	@JoinColumn(name = "ID_UF", referencedColumnName = "ID")
+		
 	public Uf getUf() {
 		return uf;
 	}
@@ -106,5 +110,10 @@ public class Municipio implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Municipio [id=" + id + "]";
 	}
 }

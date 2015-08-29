@@ -15,12 +15,16 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import br.com.cactus.cadastros.bo.MunicipioBO;
 import br.com.cactus.cadastros.model.Municipio;
 import br.com.cactus.cadastros.model.Uf;
 import br.com.cactus.cadastros.model.vo.MunicipioVO;
+import br.com.cactus.cadastros.repository.MunicipioRepository;
 import br.com.cactus.cadastros.repository.UfRepository;
+import br.com.cactus.cadastros.util.Mensagem;
+import br.com.cactus.cadastros.util.Mensagem.TipoMensagem;
 
 @Controller
 @RequestMapping(value = "/municipio")
@@ -32,6 +36,9 @@ public class MunicipioController {
 	private MunicipioBO municipioBO;
 	
 	@Autowired
+	private MunicipioRepository municipioRepository;
+	
+	@Autowired
 	private UfRepository ufRepository;
 	
 	private List<Uf> listaUf;
@@ -39,7 +46,7 @@ public class MunicipioController {
 	private Uf ufVO;
 	
 	@RequestMapping(value = "/listaMunicipio.do")
-	public String telaLista(){
+	public String telaLista(){		
 		
 		return "municipio/listaMunicipio";
 		
@@ -48,8 +55,9 @@ public class MunicipioController {
 	@RequestMapping(value = "/cadastroMunicipio.do")
 	public String telaCadastro(Model model) {
 		
-		model.addAttribute("uf", new Uf());
-				
+		model.addAttribute("listaUf", listaUf = ufRepository.todos());
+		model.addAttribute("municipio", new Municipio());
+							
 		return "municipio/cadastroMunicipio";
 		
 	}
@@ -200,6 +208,56 @@ public class MunicipioController {
 
 	}
 	
+	@RequestMapping(value = "/salvarMunicipio.do", method = RequestMethod.POST)
+	public ModelAndView gravar(Municipio municipio, HttpServletRequest request, ModelMap map){
+		
+		try {
+			if(municipio.getId() == null) {
+								
+				municipioRepository.salvar(municipio);
+				map.put("mensagem", new Mensagem("Município salvo com sucesso", TipoMensagem.SUCESSO));
+				map.put("municipio", new Municipio());
+				
+			}else {
+				
+				municipioBO.atualizar(municipio);
+				map.put("mensagem", new Mensagem("Município atualizado com sucesso", TipoMensagem.AVISO));
+				map.put("municipio", new Municipio());
+				
+			}
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			map.addAttribute("mensagem", new Mensagem("Erro na transação", TipoMensagem.ERRO));
+		}
+		
+		return new ModelAndView("/mensagem", map);
+		
+	}
 	
+	@RequestMapping(value = "/mostrarMunicipio.do")
+	public String mostrar(Integer id, Model model){
+		
+		Municipio municipio = new Municipio();
+		
+		municipio = municipioBO.pesquisarPorId(id);
+		
+		model.addAttribute("municipio", municipio);
+		
+		return "municipio/cadastroMunicipio";
+	}
+	
+	@RequestMapping(value = "/removeMunicipio.do", method=RequestMethod.GET)
+	public void excluir(Integer id, HttpServletResponse response) {
+		
+		try {
+			Municipio municipio = municipioBO.pesquisarPorId(id);
+			
+			municipioBO.excluir(municipio);
+			
+			response.setStatus(200);
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
 
 }

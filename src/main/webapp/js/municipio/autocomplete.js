@@ -25,13 +25,11 @@ $(document).ready(function() {
 								return{
 									
 									label:campo.nome,
-									//value:campo.valor
+									value:campo.valor
 								};
 								
 							}));
-						}
-						
-						
+						}						
 					}
 					
 				});
@@ -41,7 +39,8 @@ $(document).ready(function() {
 				
 				//alert(ui.item.label + " / " + ui.item.value );
 				
-				$("#inputUf").val(ui.item.label);
+				$('#inputUf').val(ui.item.label);
+				$('#inputUfId').val(ui.item.value);
 				
 				return false;
 			}
