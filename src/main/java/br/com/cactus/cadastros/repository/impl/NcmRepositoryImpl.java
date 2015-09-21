@@ -61,4 +61,16 @@ public class NcmRepositoryImpl extends GenericRepositoryImpl<Ncm> implements Ncm
 		
 		return this.total(jpql.toString(), params);
 	}
+
+	@Override
+	public List<Ncm> buscaNcmAntesCadastro(String codigo) {
+		
+		StringBuilder jpql = new StringBuilder();
+		Map<String, Object> params = new HashMap<>();
+				
+		jpql.append("SELECT n FROM Ncm n where n.codigo = :codigo ");
+		params.put("codigo", codigo);
+		
+		return this.listPesqParam(jpql.toString(), params);
+	}
 }

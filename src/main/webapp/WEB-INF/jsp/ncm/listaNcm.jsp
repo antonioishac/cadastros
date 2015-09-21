@@ -13,6 +13,7 @@
 		<tiles:putAttribute name="corpo">
 		
 			<script src="${pageContext.request.contextPath}/js/lista.js"></script>
+			<script src="${pageContext.request.contextPath}/js/ncm//lis_ncm.js"></script>
 		
 			<script type="text/javascript">
 
@@ -80,6 +81,7 @@
 								loadTabelaNcm();
 								
 								$('#modalExcluir').modal('hide');
+								$('#mensagem').html(retorno);
 								
 							},
 							error: function() {
@@ -87,6 +89,16 @@
 							}
 						});						
 						
+					});
+
+					
+					$('#limpar').click(function() {										
+
+						$('#inputCodigo').val('');
+						$('#inputDescricao').val('');
+						
+						$('#inputCodigo').focus();
+							
 					});
 																				
 				});
@@ -103,12 +115,12 @@
   					
   					<table id="tabela_ncm" class="table table-striped table-bordered cabecalho_tabela " cellspacing="0" width="100%">
 						<thead>
-							<tr>							
-								<th>ID</th>
+							<tr>								
+								<th>ID <i class="fa fa-fw fa-sort"></i></th>
 								
-								<th>Código</th>
+								<th>Código <i class="fa fa-fw fa-sort"></i></th>
 								
-								<th>Descrição</th>
+								<th>Descrição <i class="fa fa-fw fa-sort"></i></th>
 																
 								<th>Opções</th>
 							</tr>

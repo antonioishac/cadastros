@@ -11,13 +11,16 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.servlet.ModelAndView;
 import br.com.cactus.cadastros.model.Ncm;
 import br.com.cactus.cadastros.model.vo.NcmVO;
 import br.com.cactus.cadastros.repository.NcmRepository;
+import br.com.cactus.cadastros.util.Mensagem;
+import br.com.cactus.cadastros.util.Mensagem.TipoMensagem;
 
 @Controller
 @RequestMapping(value = "/ncm")
@@ -148,5 +151,79 @@ public class NcmController {
 		return jsonObject.toString();
 		
 	}
+	
+	@RequestMapping(value = "/salvarNcm.do", method = RequestMethod.POST)
+	public ModelAndView salvarNcm(Ncm ncm, HttpServletRequest request, ModelMap map){
+		
+		try {			
+			
+			if (ncm.getId() == null) {				
+				if (buscaNcmAntesCadastro(ncm.getCodigo()) == false) {
+					map.put("mensagem", new Mensagem("Este NCM já existe em nossa base de dados !", TipoMensagem.AVISO));
+				}
+				else {				
+					ncmRepository.salvar(ncm);
+					map.put("mensagem", new Mensagem("NCM salvo com sucesso!", TipoMensagem.SUCESSO));
+					map.put("ncm", new Ncm());
+				}				
+			} else {
+				ncmRepository.atualizar(ncm);
+				map.put("mensagem", new Mensagem("NCM atualizado com sucesso!", TipoMensagem.AVISO));
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("mensagem", new Mensagem("Erro na transação", TipoMensagem.ERRO));
+		}
+		
+		return new ModelAndView("/mensagem", map);
+		
+	}
+	
+	private boolean buscaNcmAntesCadastro(String codigo) {
+		
+		List<Ncm> listaNcm = ncmRepository.buscaNcmAntesCadastro(codigo);
+		
+		if (listaNcm.isEmpty()) {
+			return true;
+		}
+		
+		return false;
+	}
+	
+	@RequestMapping(value = "/mostrarNcm.do")
+	public String mostrar(Integer id, Model model){
+		
+		Ncm ncm = new Ncm();
+		
+		ncm = ncmRepository.pesquisarPorId(id);
+		
+		model.addAttribute("ncm", ncm);
+		
+		return "ncm/cadastroNcm";
+	}
+	
+	@RequestMapping(value = "/removeNcm.do", method = RequestMethod.GET)
+	public ModelAndView excluir(Integer id, ModelMap map) {
+		
+		Ncm ncm = ncmRepository.pesquisarPorId(id);
+		
+		try {
+			
+			ncmRepository.excluir(ncm);
+			
+			map.put("mensagem", new Mensagem("Exclusão realizada com sucesso", TipoMensagem.SUCESSO));
+			
+			return new ModelAndView("/mensagem", map);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			map.put("mensagem", new Mensagem("Esse registro não pode ser excluido", TipoMensagem.ERRO));			
+			return new ModelAndView("/mensagem", map);
+		}
+		
+	}
+	
+	
 
 }

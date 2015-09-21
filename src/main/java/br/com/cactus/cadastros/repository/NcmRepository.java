@@ -10,5 +10,7 @@ public interface NcmRepository extends GenericRepository<Ncm> {
 	public List<Ncm> listaNcm(Integer iDisplayLength, Integer mxResult, NcmVO ncmVO, String atributo, String ascDesc);
 	
 	public int totalNcm(NcmVO ncmVO);
+	
+	public List<Ncm> buscaNcmAntesCadastro(String codigo);
 
 }
